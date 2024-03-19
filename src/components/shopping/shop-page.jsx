@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react"
 import { useParams, Link } from "react-router-dom"
+import  styles  from './shop-page.module.css'
 
 function ShowCategories() {
     return (
@@ -10,51 +12,125 @@ function ShowCategories() {
     )
 }
 
-function ShopCategoriesNavigation() {
+function ShopCategoriesNavigation({category}) {
     return (
         <ul>
             <li><Link to='/shop/electronics'>Electronics</Link></li>
-            <li><Link to='/shop/jewelry'>Jewelry</Link></li>
+            <li><Link to='/shop/jewelery'>Jewelry</Link></li>
             <li><Link to='/shop/clothing'>Clothing</Link></li>
+            {category === 'clothing' && <ClothingNavigation></ClothingNavigation>}
         </ul>
     )
 }
 
-function ShopCategories({category}) {
+function ShopCategories({category, type}) {
+    const [items, setItems] = useState(null)
+    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(true)
+    useEffect(() =>  {
+        if (category === 'clothing' && type === 'men') {
+            getCategoryData(setItems, setError, setLoading, "men's clothing")
+            return
+        } else if (category === 'clothing' && type === 'women') {
+            getCategoryData(setItems, setError, setLoading, "women's clothing")
+            return
+        } else if (category === 'clothing' && type === undefined){
+            return
+        }
+        getCategoryData(setItems, setError, setLoading, category)
+    }, [category, type])
+
     return (
         <>
-                {category === "electronics" ? <Electronics></Electronics> :
-                category === "jewelry" ? <Jewelry></Jewelry> :
-                category === 'clothing' && <ClothingNavigation></ClothingNavigation>}
+            {category === "electronics" ? <Electronics fetchedItems={items} loading={loading}></Electronics> :
+            category === "jewelery" ? <Jewelry fetchedItems={items} loading={loading}></Jewelry> :
+            type === 'men' ? <MensClothing fetchedItems={items} loading={loading}></MensClothing> : 
+            type === 'women' && <WomensClothing fetchedItems={items} loading={loading}></WomensClothing> }
         </>
     )
 }
 
-function Electronics() {
+function Electronics({fetchedItems, loading}) {
     return (
-        <div>electronics</div>
+    <>
+        {!loading && 
+        <section className={styles.electronics} aria-label="productContainer">
+            {fetchedItems.map((item) => {
+                return (
+                    <div key={item.id} className={styles.productContainer}>
+                        <img src={item.image} alt="" className={styles.productImage}></img>
+                        <div>${item.price}</div>
+                        <div>{item.rating.rate}({item.rating.count})</div>
+                        <div>{item.title}</div>
+                        <div>{item.description}</div>
+                    </div>
+                )
+            })}
+        </section>}
+    </>
     )
 }
 
-function Jewelry() {
+function Jewelry({fetchedItems, loading}) {
     return (
-        <div>jewelry</div>
+    <>
+        {!loading && 
+        <section className={styles.electronics}>
+            {fetchedItems.map((item) => {
+                return (
+                    <div key={item.id} className={styles.productContainer}>
+                        <img src={item.image} alt="" className={styles.productImage}></img>
+                        <div>${item.price}</div>
+                        <div>{item.rating.rate}({item.rating.count})</div>
+                        <div>{item.title}</div>
+                        <div>{item.description}</div>
+                    </div>
+                )
+            })}
+        </section>}
+    </>
     )
 }
 
-function MensClothing() {
+function MensClothing({fetchedItems, loading}) {
     return (
-        <>
-        
-        </>
+    <>
+        {!loading && 
+        <section className={styles.electronics} aria-label="productContainer">
+            {fetchedItems.map((item) => {
+                return (
+                    <div key={item.id} className={styles.productContainer}>
+                        <img src={item.image} alt="" className={styles.productImage}></img>
+                        <div>${item.price}</div>
+                        <div>{item.rating.rate}({item.rating.count})</div>
+                        <div>{item.title}</div>
+                        <div>{item.description}</div>
+                    </div>
+                )
+            })}
+        </section>}
+    </>
     )
 }
 
-function WomensClothing() {
+function WomensClothing({fetchedItems, loading}) {
     return (
-        <>
-        
-        </>
+    <>
+        {!loading && 
+        <section className={styles.electronics} aria-label="productContainer">
+            {fetchedItems.map((item) => {
+                return (
+                    <div key={item.id} className={styles.productContainer}>
+                        <img src={item.image} alt="" className={styles.productImage}></img>
+                        <div>${item.price}</div>
+                        <div>{item.rating.rate}({item.rating.count})</div>
+                        <div>{item.title}</div>
+                        <div>{item.description}</div>
+                    </div>
+                )
+            })}
+        </section>}
+    </>
     )
 }
 
@@ -67,4 +143,23 @@ function ClothingNavigation() {
     )
 }
 
-export {ShopCategoriesNavigation, ShopCategories, ShowCategories, MensClothing, WomensClothing}
+
+async function getCategoryData(setItems, setError, setLoading, category) {
+    try {
+        const response = await fetch(`https://fakestoreapi.com/products/category/${category}`, {mode: 'cors'})
+        if (response.status >= 400) {
+            throw new Error(`Fetching status error. The status is ${response.status}`)
+        }
+        const data = await response.json()
+        console.log(data)
+        setItems(data)
+        setError(null)
+    } catch (error) {
+        setError(error.message);
+        console.log(error.message)
+        setItems(null)
+    } finally {
+        setLoading(false)
+    }
+}
+export {ShopCategoriesNavigation, ShopCategories, ShowCategories, MensClothing, WomensClothing, Electronics}
