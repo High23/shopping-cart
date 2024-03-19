@@ -16,11 +16,10 @@ function App() {
             <NavigationBar></NavigationBar>
             <main>
                 {directory === 'shop' ?
-                <ShopCategoriesNavigation></ShopCategoriesNavigation> :
+                <ShopCategoriesNavigation category={category}></ShopCategoriesNavigation> :
                 <ShowHomePage></ShowHomePage>
                 }
-                <ShopCategories category={category}></ShopCategories>
-                {type === 'men' ? <MensClothing></MensClothing> : type === 'womens' && <WomensClothing></WomensClothing>}
+                <ShopCategories category={category} type={type}></ShopCategories>
             </main>
         </>
     )
