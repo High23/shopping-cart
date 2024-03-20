@@ -23,7 +23,7 @@ function ShopCategoriesNavigation({category}) {
     )
 }
 
-function ShopCategories({category, type}) {
+function ShopCategories({category, type, cart, setCart}) {
     const [items, setItems] = useState(null)
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(true)
@@ -42,15 +42,15 @@ function ShopCategories({category, type}) {
 
     return (
         <>
-            {category === "electronics" ? <Electronics fetchedItems={items} loading={loading}></Electronics> :
-            category === "jewelery" ? <Jewelry fetchedItems={items} loading={loading}></Jewelry> :
-            type === 'men' ? <MensClothing fetchedItems={items} loading={loading}></MensClothing> : 
-            type === 'women' && <WomensClothing fetchedItems={items} loading={loading}></WomensClothing> }
+            {category === "electronics" ? <Electronics fetchedItems={items} loading={loading} cart={cart} setCart={setCart}></Electronics> :
+            category === "jewelery" ? <Jewelry fetchedItems={items} loading={loading} cart={cart} setCart={setCart}></Jewelry> :
+            type === 'men' ? <MensClothing fetchedItems={items} loading={loading} cart={cart} setCart={setCart}></MensClothing> : 
+            type === 'women' && <WomensClothing fetchedItems={items} loading={loading} cart={cart} setCart={setCart}></WomensClothing> }
         </>
     )
 }
 
-function Electronics({fetchedItems, loading}) {
+function Electronics({fetchedItems, loading, cart, setCart}) {
     return (
     <>
         {!loading && 
@@ -73,7 +73,9 @@ function Electronics({fetchedItems, loading}) {
                                     subtractOneFromQuantity(index)
                                 }}>-</button>
                             </span>
-                            <button type="button">Add to cart</button>
+                            <button type="button"  onClick={() => {
+                                addItemsToCart(item.id, index, cart, setCart)
+                            }}>Add to cart</button>
                         </form>
                     </div>
                 )
@@ -83,7 +85,7 @@ function Electronics({fetchedItems, loading}) {
     )
 }
 
-function Jewelry({fetchedItems, loading}) {
+function Jewelry({fetchedItems, loading, cart, setCart}) {
     return (
     <>
         {!loading && 
@@ -104,7 +106,7 @@ function Jewelry({fetchedItems, loading}) {
     )
 }
 
-function MensClothing({fetchedItems, loading}) {
+function MensClothing({fetchedItems, loading, cart, setCart}) {
     return (
     <>
         {!loading && 
@@ -125,7 +127,7 @@ function MensClothing({fetchedItems, loading}) {
     )
 }
 
-function WomensClothing({fetchedItems, loading}) {
+function WomensClothing({fetchedItems, loading, cart, setCart}) {
     return (
     <>
         {!loading && 
@@ -186,6 +188,25 @@ function subtractOneFromQuantity(index) {
         return
     }
     input.value = Number(input.value) - 1;
+}
+
+function addItemsToCart(id, index, cart, setCart) {
+    let input = document.querySelectorAll('#quantity-of-selected-product')[index];
+    let itemQuantity = Number(input.value);
+    
+    if (cart.length === 0) {
+        setCart([{productId: id, quantity: itemQuantity}])
+    } else if (cart.some((obj) => obj.productId === id)) {
+        let cartCopy = cart;
+        for (let i = 0; i < cartCopy.length; i++) {
+            if (cartCopy[i].productId === id) {
+                cartCopy[i].quantity += itemQuantity;
+            }
+        }
+        setCart(cartCopy)
+    } else {
+        setCart([...cart, {productId: id, quantity: itemQuantity}])
+    }
 }
 
 export {ShopCategoriesNavigation, ShopCategories, ShowCategories, MensClothing, WomensClothing, Electronics}
