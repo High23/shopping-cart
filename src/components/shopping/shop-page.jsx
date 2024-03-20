@@ -55,7 +55,7 @@ function Electronics({fetchedItems, loading}) {
     <>
         {!loading && 
         <section className={styles.electronics} aria-label="productContainer">
-            {fetchedItems.map((item) => {
+            {fetchedItems.map((item, index) => {
                 return (
                     <div key={item.id} className={styles.productContainer}>
                         <img src={item.image} alt="" className={styles.productImage}></img>
@@ -63,6 +63,18 @@ function Electronics({fetchedItems, loading}) {
                         <div>{item.rating.rate}({item.rating.count})</div>
                         <div>{item.title}</div>
                         <div>{item.description}</div>
+                        <form action="">
+                            <span>
+                                <input type="number" name="product quantity" id="quantity-of-selected-product" defaultValue={0}></input>
+                                <button type="button" onClick={() => {
+                                    addOneToQuantity(index)
+                                }}>+</button>
+                                <button type="button" onClick={() => {
+                                    subtractOneFromQuantity(index)
+                                }}>-</button>
+                            </span>
+                            <button type="button">Add to cart</button>
+                        </form>
                     </div>
                 )
             })}
@@ -162,4 +174,18 @@ async function getCategoryData(setItems, setError, setLoading, category) {
         setLoading(false)
     }
 }
+
+function addOneToQuantity(index) {
+    let input = document.querySelectorAll('#quantity-of-selected-product')[index];
+    input.value = Number(input.value) + 1;
+}
+
+function subtractOneFromQuantity(index) {
+    let input = document.querySelectorAll('#quantity-of-selected-product')[index];
+    if (Number(input.value) <= 0) {
+        return
+    }
+    input.value = Number(input.value) - 1;
+}
+
 export {ShopCategoriesNavigation, ShopCategories, ShowCategories, MensClothing, WomensClothing, Electronics}
