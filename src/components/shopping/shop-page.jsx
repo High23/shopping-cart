@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams, Link } from "react-router-dom"
 import  styles  from './shop-page.module.css'
+import { addItemsToCart, subtractOneFromQuantity, addOneToQuantity, getCategoryData } from "./shop-page.js"
 
 function ShowCategories() {
     return (
@@ -52,99 +53,141 @@ function ShopCategories({category, type, cart, setCart}) {
 
 function Electronics({fetchedItems, loading, cart, setCart}) {
     return (
-    <>
-        {!loading && 
-        <section className={styles.electronics} aria-label="productContainer">
-            {fetchedItems.map((item, index) => {
-                return (
-                    <div key={item.id} className={styles.productContainer}>
-                        <img src={item.image} alt="" className={styles.productImage}></img>
-                        <div>${item.price}</div>
-                        <div>{item.rating.rate}({item.rating.count})</div>
-                        <div>{item.title}</div>
-                        <div>{item.description}</div>
-                        <form action="">
-                            <span>
-                                <input type="number" name="product quantity" id="quantity-of-selected-product" defaultValue={0}></input>
-                                <button type="button" onClick={() => {
-                                    addOneToQuantity(index)
-                                }}>+</button>
-                                <button type="button" onClick={() => {
-                                    subtractOneFromQuantity(index)
-                                }}>-</button>
-                            </span>
-                            <button type="button"  onClick={() => {
-                                addItemsToCart(item.id, index, cart, setCart)
-                            }}>Add to cart</button>
-                        </form>
-                    </div>
-                )
-            })}
-        </section>}
-    </>
+        <>
+            {!loading && 
+            <section className={styles.electronics} aria-label="productContainer">
+                {fetchedItems.map((item, index) => {
+                    return (
+                        <div key={item.id} className={styles.productContainer}>
+                            <img src={item.image} alt="" className={styles.productImage}></img>
+                            <div>${item.price}</div>
+                            <div>{item.rating.rate}({item.rating.count})</div>
+                            <div>{item.title}</div>
+                            <div>{item.description}</div>
+                            <form action="">
+                                <span>
+                                    <input type="number" name="product quantity" id="quantity-of-selected-product" defaultValue={0}></input>
+                                    <button type="button" onClick={() => {
+                                        addOneToQuantity(index)
+                                    }}>+</button>
+                                    <button type="button" onClick={() => {
+                                        subtractOneFromQuantity(index)
+                                    }}>-</button>
+                                </span>
+                                <button type="button"  onClick={() => {
+                                    addItemsToCart(item, index, cart, setCart)
+                                }}>Add to cart</button>
+                            </form>
+                        </div>
+                    )
+                })}
+            </section>}
+        </>
     )
 }
 
 function Jewelry({fetchedItems, loading, cart, setCart}) {
     return (
-    <>
-        {!loading && 
-        <section className={styles.electronics}>
-            {fetchedItems.map((item) => {
-                return (
-                    <div key={item.id} className={styles.productContainer}>
-                        <img src={item.image} alt="" className={styles.productImage}></img>
-                        <div>${item.price}</div>
-                        <div>{item.rating.rate}({item.rating.count})</div>
-                        <div>{item.title}</div>
-                        <div>{item.description}</div>
-                    </div>
-                )
-            })}
-        </section>}
-    </>
+        <>
+            {!loading && 
+            <section className={styles.electronics} aria-label="productContainer">
+                {fetchedItems.map((item, index) => {
+                    return (
+                        <div key={item.id} className={styles.productContainer}>
+                            <img src={item.image} alt="" className={styles.productImage}></img>
+                            <div>${item.price}</div>
+                            <div>{item.rating.rate}({item.rating.count})</div>
+                            <div>{item.title}</div>
+                            <div>{item.description}</div>
+                            <form action="">
+                                <span>
+                                    <input type="number" name="product quantity" id="quantity-of-selected-product" defaultValue={0}></input>
+                                    <button type="button" onClick={() => {
+                                        addOneToQuantity(index)
+                                    }}>+</button>
+                                    <button type="button" onClick={() => {
+                                        subtractOneFromQuantity(index)
+                                    }}>-</button>
+                                </span>
+                                <button type="button"  onClick={() => {
+                                    addItemsToCart(item, index, cart, setCart)
+                                }}>Add to cart</button>
+                            </form>
+                        </div>
+                    )
+                })}
+            </section>}
+        </>
     )
 }
 
 function MensClothing({fetchedItems, loading, cart, setCart}) {
     return (
-    <>
-        {!loading && 
-        <section className={styles.electronics} aria-label="productContainer">
-            {fetchedItems.map((item) => {
-                return (
-                    <div key={item.id} className={styles.productContainer}>
-                        <img src={item.image} alt="" className={styles.productImage}></img>
-                        <div>${item.price}</div>
-                        <div>{item.rating.rate}({item.rating.count})</div>
-                        <div>{item.title}</div>
-                        <div>{item.description}</div>
-                    </div>
-                )
-            })}
-        </section>}
-    </>
+        <>
+            {!loading && 
+            <section className={styles.electronics} aria-label="productContainer">
+                {fetchedItems.map((item, index) => {
+                    return (
+                        <div key={item.id} className={styles.productContainer}>
+                            <img src={item.image} alt="" className={styles.productImage}></img>
+                            <div>${item.price}</div>
+                            <div>{item.rating.rate}({item.rating.count})</div>
+                            <div>{item.title}</div>
+                            <div>{item.description}</div>
+                            <form action="">
+                                <span>
+                                    <input type="number" name="product quantity" id="quantity-of-selected-product" defaultValue={0}></input>
+                                    <button type="button" onClick={() => {
+                                        addOneToQuantity(index)
+                                    }}>+</button>
+                                    <button type="button" onClick={() => {
+                                        subtractOneFromQuantity(index)
+                                    }}>-</button>
+                                </span>
+                                <button type="button"  onClick={() => {
+                                    addItemsToCart(item, index, cart, setCart)
+                                }}>Add to cart</button>
+                            </form>
+                        </div>
+                    )
+                })}
+            </section>}
+        </>
     )
 }
 
 function WomensClothing({fetchedItems, loading, cart, setCart}) {
     return (
-    <>
-        {!loading && 
-        <section className={styles.electronics} aria-label="productContainer">
-            {fetchedItems.map((item) => {
-                return (
-                    <div key={item.id} className={styles.productContainer}>
-                        <img src={item.image} alt="" className={styles.productImage}></img>
-                        <div>${item.price}</div>
-                        <div>{item.rating.rate}({item.rating.count})</div>
-                        <div>{item.title}</div>
-                        <div>{item.description}</div>
-                    </div>
-                )
-            })}
-        </section>}
-    </>
+        <>
+            {!loading && 
+            <section className={styles.electronics} aria-label="productContainer">
+                {fetchedItems.map((item, index) => {
+                    return (
+                        <div key={item.id} className={styles.productContainer}>
+                            <img src={item.image} alt="" className={styles.productImage}></img>
+                            <div>${item.price}</div>
+                            <div>{item.rating.rate}({item.rating.count})</div>
+                            <div>{item.title}</div>
+                            <div>{item.description}</div>
+                            <form action="">
+                                <span>
+                                    <input type="number" name="product quantity" id="quantity-of-selected-product" defaultValue={0}></input>
+                                    <button type="button" onClick={() => {
+                                        addOneToQuantity(index)
+                                    }}>+</button>
+                                    <button type="button" onClick={() => {
+                                        subtractOneFromQuantity(index)
+                                    }}>-</button>
+                                </span>
+                                <button type="button"  onClick={() => {
+                                    addItemsToCart(item, index, cart, setCart)
+                                }}>Add to cart</button>
+                            </form>
+                        </div>
+                    )
+                })}
+            </section>}
+        </>
     )
 }
 
@@ -157,56 +200,4 @@ function ClothingNavigation() {
     )
 }
 
-
-async function getCategoryData(setItems, setError, setLoading, category) {
-    try {
-        const response = await fetch(`https://fakestoreapi.com/products/category/${category}`, {mode: 'cors'})
-        if (response.status >= 400) {
-            throw new Error(`Fetching status error. The status is ${response.status}`)
-        }
-        const data = await response.json()
-        console.log(data)
-        setItems(data)
-        setError(null)
-    } catch (error) {
-        setError(error.message);
-        console.log(error.message)
-        setItems(null)
-    } finally {
-        setLoading(false)
-    }
-}
-
-function addOneToQuantity(index) {
-    let input = document.querySelectorAll('#quantity-of-selected-product')[index];
-    input.value = Number(input.value) + 1;
-}
-
-function subtractOneFromQuantity(index) {
-    let input = document.querySelectorAll('#quantity-of-selected-product')[index];
-    if (Number(input.value) <= 0) {
-        return
-    }
-    input.value = Number(input.value) - 1;
-}
-
-function addItemsToCart(id, index, cart, setCart) {
-    let input = document.querySelectorAll('#quantity-of-selected-product')[index];
-    let itemQuantity = Number(input.value);
-    
-    if (cart.length === 0) {
-        setCart([{productId: id, quantity: itemQuantity}])
-    } else if (cart.some((obj) => obj.productId === id)) {
-        let cartCopy = cart;
-        for (let i = 0; i < cartCopy.length; i++) {
-            if (cartCopy[i].productId === id) {
-                cartCopy[i].quantity += itemQuantity;
-            }
-        }
-        setCart(cartCopy)
-    } else {
-        setCart([...cart, {productId: id, quantity: itemQuantity}])
-    }
-}
-
-export {ShopCategoriesNavigation, ShopCategories, ShowCategories, MensClothing, WomensClothing, Electronics}
+export {ShopCategoriesNavigation, ShopCategories, Electronics}
