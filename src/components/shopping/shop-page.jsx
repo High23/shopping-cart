@@ -5,7 +5,7 @@ import { addItemsToCart, subtractOneFromQuantity, addOneToQuantity, getCategoryD
 
 function ShopCategoriesNavigation({category}) {
     return (
-        <ul>
+        <ul className={styles.shopCategoryNavigationBar}>
             <li><Link to='/shop/electronics'>Electronics</Link></li>
             <li><Link to='/shop/jewelery'>Jewelry</Link></li>
             <li><Link to='/shop/clothing'>Clothing</Link></li>
@@ -42,29 +42,33 @@ function CategoryItems({fetchedItems, loading, cart, setCart}) {
     return (
         <>
             {!loading && 
-            <section className={styles.electronics} aria-label="productContainer">
+            <section className={styles.products} aria-label="productContainer">
                 {fetchedItems.map((item, index) => {
                     return (
                         <div key={item.id} className={styles.productContainer}>
-                            <img src={item.image} alt="" className={styles.productImage}></img>
-                            <div>${item.price}</div>
-                            <div>{item.rating.rate}({item.rating.count})</div>
-                            <div>{item.title}</div>
-                            <div>{item.description}</div>
-                            <form action="">
-                                <span>
-                                    <input type="number" name="product quantity" id="quantity-of-selected-product" defaultValue={0}></input>
-                                    <button type="button" onClick={() => {
-                                        addOneToQuantity(index)
-                                    }}>+</button>
-                                    <button type="button" onClick={() => {
-                                        subtractOneFromQuantity(index)
-                                    }}>-</button>
-                                </span>
-                                <button type="button"  onClick={() => {
-                                    addItemsToCart(item, index, cart, setCart)
-                                }}>Add to cart</button>
-                            </form>
+                            <span><img src={item.image} alt="" className={styles.productImage}></img></span>
+                            <div className={styles.productInfo}>
+                                <h4>{item.title}</h4>
+                                <div className={styles.priceAndRatings}>
+                                    <span>{item.rating.rate}/5 stars ({item.rating.count} reviews) </span>
+                                    <span>Price: ${item.price}</span>
+                                </div>
+                                <form action="">
+                                    <span>
+                                        <button type="button" onClick={() => {
+                                            subtractOneFromQuantity(index)
+                                        }}>-</button>
+                                        <input type="number" name="product quantity" id="quantity-of-selected-product" defaultValue={0}></input>
+                                        <button type="button" onClick={() => {
+                                            addOneToQuantity(index)
+                                        }}>+</button>
+                                    </span>
+                                    <button type="button"  onClick={() => {
+                                        addItemsToCart(item, index, cart, setCart)
+                                    }}>Add to cart</button>
+                                </form>
+                            </div>
+                            
                         </div>
                     )
                 })}
