@@ -3,10 +3,10 @@ import styles from "./navigation-bar.module.css"
 
 function NavigationBar({cart}) {
     return (
-        <ul>
-            <li><Link to='/'>Home</Link></li>
-            <li><Link to="/shop">Shop</Link></li>
-            <li><Link to="/cart">Cart</Link></li>
+        <ul className={styles.navigationBar}>
+            <li><Link to='/' className={styles.navigationBarButton}>Home</Link></li>
+            <li><Link to="/shop" className={styles.navigationBarButton}>Shop</Link></li>
+            <li><Link to="/cart" className={styles.navigationBarButton}>Cart</Link></li>
         </ul>
     )
 }
