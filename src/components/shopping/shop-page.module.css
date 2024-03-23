@@ -1,0 +1,100 @@
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  row-gap: 30px;
+  column-gap: 25px;
+  padding: 15px 20px 40px;
+}
+
+.productImage, .productContainer > span { 
+  max-width: 250px;
+  max-height: 250px;
+}
+
+.productContainer {
+  display: grid;
+  grid-template-columns: 275px;
+  justify-items: center;
+  justify-content: end;
+  padding: 15px 0px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0px 5px 6px 6px #7c7c7c59;;
+}
+
+.productContainer > span { 
+  align-self: center;
+}
+
+.productContainer > div {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  gap: 6px;
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.shopCategoryNavigationBar {
+  composes: navigationBar from '../navigation-bar/navigation-bar.module.css';
+  justify-content: center;
+  gap: 30px;
+}
+
+.productInfo {
+  color: black;
+}
+
+form {
+  display: grid;
+  row-gap: 5px;
+}
+
+form > button {
+  max-height: 50px;
+}
+
+form > span {
+  display: flex;
+  max-width: 180px;
+  column-gap: 5px;
+}
+
+span > input {
+  flex: 0 1 100px;
+  text-align: center;
+  min-width: 0;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+span > input:focus, span > input:hover {
+  border: 2px solid blue;
+  outline: none;
+}
+
+h4 {
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+  text-align: center;
+  margin: 0px;
+  padding-top: 15px;
+  max-width: 250px;
+}
+
+.priceAndRatings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
