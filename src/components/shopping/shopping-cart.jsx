@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import  styles  from './shop-page.module.css'
 import  styled  from '/src/App.module.css'
 import { addOneToQuantity, subtractOneFromQuantity } from './shop-page'
+import {inputChange, formSubmit, loadTotalPrice, deleteItemFromCart, addOneFromCart, subtractOneFromCart, updateTotalPrice} from './shopping-cart'
 
 function ShoppingCart({cart, setCart}) {
     const [totalPrice, setTotalPrice] = useState(loadTotalPrice(cart))
@@ -9,7 +10,7 @@ function ShoppingCart({cart, setCart}) {
     return (
         <>
             {cart.length <= 0 ? 
-            <div className={styles.empty}>
+            <div className={styled.empty}>
                 Your cart is empty! Shop around to fill it up.
             </div> 
             : 
@@ -22,7 +23,7 @@ function ShoppingCart({cart, setCart}) {
                             <div className={styles.priceAndRatings}>
                                 <span>Price: ${item.price}</span>
                                 <div>Total price: ${item.totalPrice}</div>
-                                <form action="">
+                                <form action="" onSubmit={formSubmit}>
                                     <span>
                                         <button type="button"  onClick={() => {
                                             let input = document.querySelectorAll('#quantity-of-selected-product')[index];
@@ -31,7 +32,9 @@ function ShoppingCart({cart, setCart}) {
                                             subtractOneFromCart(index, cart, setCart)
                                             updateTotalPrice(totalPrice, setTotalPrice, item, 'subtract')
                                         }}>-</button>
-                                        <input type="number" name="product quantity" id="quantity-of-selected-product" onChange={inputChange} defaultValue={item.quantity}></input>
+                                        <input type="number" name="product quantity" id="quantity-of-selected-product" onChange={(element) => {
+                                            inputChange(cart, setCart, index, element)
+                                        }} defaultValue={item.quantity}></input>
                                         <button type="button" onClick={() => {
                                             addOneToQuantity(index)
                                             addOneFromCart(index, cart, setCart)
@@ -57,48 +60,6 @@ function ShoppingCart({cart, setCart}) {
             </div>
         </>
     )
-}
-
-function loadTotalPrice(cart) {
-    let total = 0
-    for (let i = 0; i < cart.length; i++) {
-        total += cart[i].totalPrice
-    }
-    return total
-}
-
-function updateTotalPrice(totalPrice, setTotalPrice, item, operation) {
-    let newTotal = totalPrice
-    if (operation === 'add') {
-        newTotal = newTotal + item.price
-    } else {
-        newTotal = newTotal - item.price
-    }
-    setTotalPrice(newTotal)
-}
-
-function subtractOneFromCart(index, cart, setCart) {
-    let cartCopy = cart;
-    cartCopy[index].quantity -= 1;
-    cartCopy[index].totalPrice = cartCopy[index].totalPrice - cartCopy[index].price;
-    setCart([...cartCopy]);
-}
-
-function addOneFromCart(index, cart, setCart) {
-    let cartCopy = cart;
-    cartCopy[index].quantity += 1;
-    cartCopy[index].totalPrice = cartCopy[index].totalPrice + cartCopy[index].price;
-    setCart([...cartCopy]);
-}
-
-function deleteItemFromCart(cart, setCart, index) {
-    let cartCopy = cart;
-    cartCopy.splice(index, 1)
-    setCart([...cartCopy])
-}
-
-function inputChange(e) {
-    
 }
 
 export default ShoppingCart
