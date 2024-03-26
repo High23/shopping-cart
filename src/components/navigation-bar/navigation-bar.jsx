@@ -6,7 +6,7 @@ function NavigationBar({cart}) {
         <ul className={styles.navigationBar}>
             <li><Link to='/' className={styles.navigationBarButton}>Home</Link></li>
             <li><Link to="/shop" className={styles.navigationBarButton}>Shop</Link></li>
-            <li><Link to="/cart" className={styles.navigationBarButton}>Cart</Link></li>
+            <li><Link to="/cart" className={styles.navigationBarButton}>Cart {cart.length > 0 && `(${cart.length})`}</Link></li>
         </ul>
     )
 }
