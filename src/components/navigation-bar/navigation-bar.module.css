@@ -24,3 +24,11 @@
     background-color: #71717a;
     color: #d1d5db;
 }
+
+@media (max-width: 680px) {
+    .navigationBar {
+        font-size: 1.1rem;
+        padding-right: 0px;
+        gap: 15px;
+    }
+}
