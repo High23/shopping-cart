@@ -4,7 +4,7 @@ import NavigationBar from './components/navigation-bar/navigation-bar'
 import { useParams } from 'react-router-dom'
 import ShowHomePage from './components/home-page/home-page'
 import { ShopCategoriesNavigation, ShopCategories} from './components/shopping/shop-page.jsx'
-import ShoppingCart from './components/shopping/shopping-cart'
+import ShoppingCart from './components/shopping/shopping-cart.jsx'
 
 
 function App() {

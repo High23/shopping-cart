@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import  styles  from './shop-page.module.css'
 import { addItemsToCart, subtractOneFromQuantity, addOneToQuantity, getCategoryData } from "./shop-page.js"
+import { formSubmit } from "./shopping-cart.js"
 
 function ShopCategoriesNavigation() {
     return (
@@ -54,7 +55,7 @@ function CategoryItems({fetchedItems, loading, cart, setCart}) {
                                     <span>{item.rating.rate}/5 stars ({item.rating.count} reviews) </span>
                                     <span>Price: ${item.price}</span>
                                 </div>
-                                <form action="">
+                                <form action="" onSubmit={formSubmit}>
                                     <span>
                                         <button type="button" onClick={() => {
                                             subtractOneFromQuantity(index)
