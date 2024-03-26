@@ -116,9 +116,7 @@ header {
     .itemInfo {
         font-size: 1rem;
     }
-    .homepage {
-        grid-column: auto;
-    }
+    
 }
 
 @media (max-width: 680px) {
@@ -179,5 +177,9 @@ header {
     .empty {
         font-size: 1.6rem;
         padding: 0px 15px;
+    }
+    
+    .homepage {
+        grid-column: auto;
     }
 }
