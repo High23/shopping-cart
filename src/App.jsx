@@ -10,22 +10,20 @@ import ShoppingCart from './components/shopping/shopping-cart'
 function App() {
     const { directory } = useParams()
     const { category } = useParams()
-    const { type } = useParams()
     const [cart, setCart] = useState([])
+
     return (
-        <>
-            <header>Shopping cart Project</header>
+        <div className={styles.container}>
+            <header>The Modern Shop</header>
             <NavigationBar cart={cart}></NavigationBar>
-            <main>
-                {directory === 'shop' ?
-                <ShopCategoriesNavigation category={category}></ShopCategoriesNavigation> :
-                directory === 'cart' ?
-                <ShoppingCart cart={cart}></ShoppingCart> :
-                <ShowHomePage></ShowHomePage>
-                }
-                <ShopCategories category={category} type={type} cart={cart} setCart={setCart}></ShopCategories>
+            <main className={directory === undefined ? styles.homepage : directory === 'cart' ? styles.cart : ''}>
+                {directory === 'cart' &&
+                <ShoppingCart cart={cart} setCart={setCart} ></ShoppingCart> }
+                {directory === 'shop' ? <ShopCategoriesNavigation></ShopCategoriesNavigation> : 
+                directory === undefined && <ShowHomePage></ShowHomePage>}
+                {category !== undefined && <ShopCategories category={category} cart={cart} setCart={setCart} ></ShopCategories>}
             </main>
-        </>
+        </div>
     )
 }
 
