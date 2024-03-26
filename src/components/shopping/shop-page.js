@@ -1,4 +1,3 @@
-
 async function getCategoryData(setItems, setError, setLoading, category) {
     try {
         const response = await fetch(`https://fakestoreapi.com/products/category/${category}`, {mode: 'cors'});
@@ -23,7 +22,7 @@ function addOneToQuantity(index) {
 
 function subtractOneFromQuantity(index) {
     let input = document.querySelectorAll('#quantity-of-selected-product')[index];
-    if (Number(input.value) <= 0) {
+    if (Number(input.value) <= 1) {
         return
     }
     input.value = Number(input.value) - 1;
@@ -32,18 +31,21 @@ function subtractOneFromQuantity(index) {
 function addItemsToCart(item, index, cart, setCart) {
     const input = document.querySelectorAll('#quantity-of-selected-product')[index];
     const itemQuantity = Number(input.value);
-    if (cart.length === 0) {
-        setCart([{itemInfo: item, quantity: itemQuantity }]);
-    } else if (cart.some((obj) => obj.productId === item.id)) {
-        let cartCopy = cart;
-        for (let i = 0; i < cartCopy.length; i++) {
-            if (cartCopy[i].itemInfo.id === item.id) {
-                cartCopy[i].quantity += itemQuantity;
-            }
+    let cartCopy = cart;
+    if (cartCopy.length === 0) {
+        setCart([{id: item.id, title: item.title, price: item.price, image: item.image, quantity: itemQuantity, totalPrice: itemQuantity * item.price }]);
+    }
+    for (let i = 0; i < cartCopy.length; i++) {
+        let cartItem = cartCopy[i]
+        if (cartItem.id === item.id) {
+            cartItem.quantity += itemQuantity;
+            cartItem.totalPrice = cartItem.quantity * item.price;
+            setCart(cartCopy);
+            break;
         }
-        setCart(cartCopy);
-    } else {
-        setCart([...cart, {itemInfo: item, quantity: itemQuantity}]);
+    }
+    if (!cartCopy.some(obj => obj.id === item.id)) {
+        setCart([...cart, {id: item.id, title: item.title, price: item.price, image: item.image, quantity: itemQuantity, totalPrice: itemQuantity * item.price }]);
     }
 }
 
